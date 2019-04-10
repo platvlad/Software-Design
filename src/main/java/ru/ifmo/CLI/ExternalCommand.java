@@ -10,8 +10,8 @@ import java.util.List;
 
 //class implementing external command calls
 public class ExternalCommand extends Command {
-    public ExternalCommand(String[] arguments) {
-        this.arguments = arguments;
+    public ExternalCommand(List<String> arguments) {
+        super.arguments = arguments;
     }
 
     public ExternalCommand(IOData data) {
@@ -19,8 +19,7 @@ public class ExternalCommand extends Command {
     }
 
     public IOData execute() {
-        List<String> argList = Arrays.asList(arguments);
-        ProcessBuilder processBuilder = new ProcessBuilder(argList);
+        ProcessBuilder processBuilder = new ProcessBuilder(arguments);
         processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();
@@ -33,10 +32,11 @@ public class ExternalCommand extends Command {
                 input.add(line);
                 line = buffReader.readLine();
             }
-            return new IOData(input.toArray(new String[0]));
+            return new IOData(input);
         } catch (IOException ex) {
-            String message = arguments[0] + " failed";
-            String[] result = { message };
+            String message = arguments.get(0) + " failed";
+            List<String> result = new ArrayList<>();
+            result.add(message);
             return new IOData(result);
         }
     }

@@ -16,9 +16,10 @@ public class LineParser {
         this.line = line;
         IOData result = null;
         while (counter < line.length()) {
-            String[] words = parseCommand();
-            String commandName = words[0];
-            String[] arguments = Arrays.copyOfRange(words, 1, words.length);
+            List<String> words = parseCommand();
+            String commandName = words.get(0);
+
+            List<String> arguments = words.subList(1, words.size());
             Command command;
             //create command by its name and arguments
             if (result == null) {
@@ -34,7 +35,7 @@ public class LineParser {
 
     //get array of words from string
     // until getting pipe symbol (|)
-    private String[] parseCommand()
+    private List<String> parseCommand()
     {
         boolean inFullQuoting = false;
         boolean inWeakQuoting = false;
@@ -136,7 +137,7 @@ public class LineParser {
         if (currentWord.length() != 0) {
             words.add(currentWord.toString());
         }
-        return words.toArray(new String[0]);
+        return words;
     }
 
 
