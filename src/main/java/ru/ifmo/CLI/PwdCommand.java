@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 //implements pwd command (write current directory)
 public class PwdCommand extends Command {
 

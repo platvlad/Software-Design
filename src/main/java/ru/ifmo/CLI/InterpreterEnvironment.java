@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 import java.util.HashMap;
 
 //class for storing variable values

@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 //implementing echo Command (Output parameters)
 public class EchoCommand extends Command {
 

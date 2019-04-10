@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

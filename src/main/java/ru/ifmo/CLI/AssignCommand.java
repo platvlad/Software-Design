@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 //class implementing Assign command (a=$b)
 public class AssignCommand extends Command {
     public AssignCommand(String[] arguments) {

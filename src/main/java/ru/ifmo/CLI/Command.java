@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 //class for Command abstraction
 //Each command shall inherit this class
 public abstract class Command {

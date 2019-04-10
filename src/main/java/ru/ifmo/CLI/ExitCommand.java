@@ -1,5 +1,7 @@
+package ru.ifmo.CLI;
+
 //implement command for exiting interpreter
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
     public ExitCommand(String[] arguments) {
         this.arguments = arguments;
     }

@@ -1,3 +1,5 @@
+package ru.ifmo.CLI;
+
 import java.util.Scanner;
 
 //Command line interpreter.
