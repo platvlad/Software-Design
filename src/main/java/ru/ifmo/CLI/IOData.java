@@ -7,19 +7,20 @@ import java.util.List;
 //class representing pipe content
 public class IOData {
     private long sizeInBytes = 0;
+    private List<String> data;
 
     public IOData() {
-        data = new String[0];
+        data = new ArrayList<>();
     }
 
-    public IOData(String[] inputData) {
+    public IOData(List<String> inputData) {
         data = inputData;
         for (String line : inputData) {
             sizeInBytes += line.length() + 1;
         }
     }
 
-    public IOData(String[] inputData, long sizeInBytes) {
+    public IOData(List<String> inputData, long sizeInBytes) {
         data = inputData;
         this.sizeInBytes = sizeInBytes;
     }
@@ -37,15 +38,13 @@ public class IOData {
 
     //concatenate outputs of two commands
     public void add(IOData other) {
-        List<String> concatenation = new ArrayList<String>(data.length + other.data.length);
-        Collections.addAll(concatenation, data);
-        Collections.addAll(concatenation, other.data);
-        data = concatenation.toArray(new String[0]);
+        List<String> concatenation = new ArrayList<String>(data.size() + other.data.size());
+        data.addAll(other.data);
         sizeInBytes += other.sizeInBytes;
     }
-    String[] getData() {
+    List<String> getData() {
         return data;
     }
 
-    private String[] data;
+
 }

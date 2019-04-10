@@ -10,7 +10,7 @@ import java.util.Scanner;
 //Write files into output
 public class CatCommand extends Command {
 
-    public CatCommand(String [] words) {
+    public CatCommand(List<String> words) {
         this.arguments = words;
     }
 
@@ -37,11 +37,11 @@ public class CatCommand extends Command {
             while (scanner.hasNextLine()) {
                 lines.add(scanner.nextLine());
             }
-            String[] output = lines.toArray(new String[0]);
-            return new IOData(output, file.length());
+            return new IOData(lines, file.length());
         } catch (FileNotFoundException ex) {
             String message = "File " + fileName + " not found";
-            String[] output = { message };
+            List<String> output = new ArrayList<>();
+            output.add(message);
             return new IOData(output);
         }
     }

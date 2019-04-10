@@ -1,10 +1,12 @@
 package ru.ifmo.CLI;
 
+import java.util.List;
+
 //implementing echo Command (Output parameters)
 public class EchoCommand extends Command {
 
-    public EchoCommand(String[] arguments) {
-        this.arguments = arguments;
+    public EchoCommand(List<String> arguments) {
+        super.arguments = arguments;
     }
 
     public EchoCommand(IOData data) {

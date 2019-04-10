@@ -6,15 +6,15 @@ import java.util.List;
 
 //class for creating Command objects by names and arguments
 public class CommandMaker {
-    private static Command makeExternal(String name, String[] arguments) {
+    private static Command makeExternal(String name, List<String> arguments) {
         List<String> extraCommandArgs = new ArrayList<String>();
         extraCommandArgs.add(name);
-        Collections.addAll(extraCommandArgs, arguments);
-        return new ExternalCommand(extraCommandArgs.toArray(new String[0]));
+        extraCommandArgs.addAll(arguments);
+        return new ExternalCommand(extraCommandArgs);
     }
 
     //create Command by its name and arguments
-    public static Command makeCommand(String name, String[] arguments) {
+    public static Command makeCommand(String name, List<String> arguments) {
         switch(name) {
             case "pwd":
                 return new PwdCommand(arguments);
@@ -26,10 +26,13 @@ public class CommandMaker {
                 return new EchoCommand(arguments);
             case "exit":
                 return new ExitCommand(arguments);
+            case "grep":
+                return new GrepCommand(arguments);
             default:
                 int equalIndex = name.indexOf('=');
                 if (equalIndex >= 0) {
-                    String[] assignArgument = { name };
+                    List<String> assignArgument = new ArrayList<>();
+                    assignArgument.add(name);
                     return new AssignCommand(assignArgument);
                 }
                 return makeExternal(name, arguments);
@@ -52,7 +55,8 @@ public class CommandMaker {
             default:
                 int equalIndex = name.indexOf('=');
                 if (equalIndex >= 0) {
-                    String[] assignArgument = { name };
+                    List<String> assignArgument = new ArrayList<>();
+                    assignArgument.add(name);
                     return new AssignCommand(assignArgument);
                 }
                 return makeExternal(name, data.getData());
