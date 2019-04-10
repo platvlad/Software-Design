@@ -7,7 +7,6 @@ public class CLI {
     //Process lines subsequently
     //create LineParser object for each line
     public static void main(String[] args) {
-        boolean exit = false;
         Scanner scanner = new Scanner(System.in);
         while (!InterpreterEnvironment.exit) {
             if (scanner.hasNextLine()) {

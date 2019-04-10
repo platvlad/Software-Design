@@ -29,13 +29,14 @@ public class CatCommand extends Command {
 
     private IOData catFile(String fileName) {
         try {
-            Scanner scanner = new Scanner(new File(fileName));
+            File file = new File(fileName);
+            Scanner scanner = new Scanner(file);
             List<String> lines = new ArrayList<String>();
             while (scanner.hasNextLine()) {
                 lines.add(scanner.nextLine());
             }
             String[] output = lines.toArray(new String[0]);
-            return new IOData(output);
+            return new IOData(output, file.length());
         } catch (FileNotFoundException ex) {
             String message = "File " + fileName + " not found";
             String[] output = { message };

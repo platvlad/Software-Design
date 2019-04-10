@@ -23,10 +23,10 @@ public class WcCommand extends Command {
                     String[] words = line.split(" ");
                     wordsNumber += words.length;
                     ++stringsNumber;
-                    String answer = stringsNumber + " " + wordsNumber + " " + file.length();
-                    String[] output = { answer };
-                    return new IOData(output);
                 }
+                String answer = stringsNumber + " " + wordsNumber + " " + file.length();
+                String[] output = { answer };
+                return new IOData(output);
             } catch (FileNotFoundException ex) {
                 String message = "File " + fileName + " not found";
                 String[] output = { message };
@@ -35,21 +35,17 @@ public class WcCommand extends Command {
         }
         else {
             String[] lines = data.getData();
-            int stringsNumber = 0;
+            long size = data.getSizeInBytes();
+            int stringsNumber = lines.length;
             int wordsNumber = 0;
-            int size = 0;
             for (String line : lines) {
                 String[] words = line.split(" ");
                 wordsNumber += words.length;
-                ++stringsNumber;
-                size += line.length() + 1;
-
             }
             String answer = stringsNumber + " " + wordsNumber + " " + size;
             String[] output = { answer };
             return new IOData(output);
         }
-        return new IOData();
 
     }
 }
