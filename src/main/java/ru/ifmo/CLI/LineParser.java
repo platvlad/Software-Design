@@ -51,6 +51,7 @@ public class LineParser {
                     inWeakQuoting = false;
                     if (!inFullQuoting) {
                         words.add(currentWord.toString());
+                        currentWord.setLength(0);
                     }
                 }
                 else {
