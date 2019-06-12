@@ -1,7 +1,6 @@
 package ru.ifmo.CLI;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 //class representing pipe content
@@ -18,6 +17,7 @@ public class IOData {
         for (String line : inputData) {
             sizeInBytes += line.length() + 1;
         }
+        sizeInBytes -= 1;
     }
 
     public IOData(List<String> inputData, long sizeInBytes) {
@@ -30,7 +30,7 @@ public class IOData {
     }
 
     //print output of last command in pipe
-    public void printData() {
+    void printData() {
         for (String line : data) {
             System.out.println(line);
         }
@@ -42,7 +42,7 @@ public class IOData {
         data.addAll(other.data);
         sizeInBytes += other.sizeInBytes;
     }
-    List<String> getData() {
+    public List<String> getData() {
         return data;
     }
 

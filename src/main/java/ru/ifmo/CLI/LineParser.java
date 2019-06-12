@@ -1,18 +1,20 @@
 package ru.ifmo.CLI;
 
+import ru.ifmo.CLI.Command.Command;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 //class for getting commands from string
-public class LineParser {
+class LineParser {
+
+    private int counter = 0;
+    private String line;
+
     LineParser() {}
 
     //parse and execute commands from string
-    public void parse(String line) {
+    void parse(String line) {
         this.line = line;
         IOData result = null;
         while (counter < line.length()) {
@@ -53,8 +55,7 @@ public class LineParser {
                         words.add(currentWord.toString());
                         currentWord.setLength(0);
                     }
-                }
-                else {
+                } else {
                     currentWord.append(currentChar);
                 }
                 ++counter;
@@ -140,10 +141,5 @@ public class LineParser {
         }
         return words;
     }
-
-
-
-    private int counter = 0;
-    private String line;
 
 }
