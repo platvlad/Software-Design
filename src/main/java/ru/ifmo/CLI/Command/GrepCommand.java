@@ -1,7 +1,7 @@
 package ru.ifmo.CLI.Command;
 
 import org.apache.commons.cli.*;
-import ru.ifmo.CLI.IOData;
+import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.File;
 import java.io.FileNotFoundException;

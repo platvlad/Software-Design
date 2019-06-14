@@ -1,6 +1,6 @@
 package ru.ifmo.CLI.Command;
 
-import ru.ifmo.CLI.IOData;
+import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,7 +16,11 @@ public class ExternalCommand extends Command {
     }
 
     public IOData execute() {
-        ProcessBuilder processBuilder = new ProcessBuilder(arguments);
+        List<String> processArguments = arguments;
+        if (fromPipe()) {
+            processArguments.addAll(data.getData());
+        }
+        ProcessBuilder processBuilder = new ProcessBuilder(processArguments);
         processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();

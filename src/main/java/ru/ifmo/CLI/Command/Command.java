@@ -2,7 +2,7 @@ package ru.ifmo.CLI.Command;
 
 import java.util.ArrayList;
 import java.util.List;
-import ru.ifmo.CLI.IOData;
+import ru.ifmo.CLI.Utils.IOData;
 
 //class for Command abstraction
 //Each command shall inherit this class
@@ -36,7 +36,7 @@ public abstract class Command {
         return !arguments.isEmpty();
     }
 
-    boolean inPipe() {
+    boolean fromPipe() {
         return (data != null);
     }
 

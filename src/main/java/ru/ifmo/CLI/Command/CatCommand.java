@@ -1,6 +1,6 @@
 package ru.ifmo.CLI.Command;
 
-import ru.ifmo.CLI.IOData;
+import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ public class CatCommand extends Command {
     }
 
     public IOData execute() {
-        if (inPipe()) {
+        if (fromPipe()) {
             return data;
         }
         IOData result = new IOData();

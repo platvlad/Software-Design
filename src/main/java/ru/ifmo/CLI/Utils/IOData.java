@@ -1,4 +1,4 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,11 @@ import java.util.List;
 public class IOData {
     private long sizeInBytes = 0;
     private List<String> data;
+    private boolean empty = false;
 
     public IOData() {
         data = new ArrayList<>();
+        empty = true;
     }
 
     public IOData(List<String> inputData) {
@@ -25,12 +27,16 @@ public class IOData {
         this.sizeInBytes = sizeInBytes;
     }
 
+    public boolean isEmpty() {
+        return empty;
+    }
+
     public long getSizeInBytes() {
         return sizeInBytes;
     }
 
     //print output of last command in pipe
-    void printData() {
+    public void printData() {
         for (String line : data) {
             System.out.println(line);
         }
@@ -38,6 +44,7 @@ public class IOData {
 
     //concatenate outputs of two commands
     public void add(IOData other) {
+        empty = false;
         List<String> concatenation = new ArrayList<String>(data.size() + other.data.size());
         data.addAll(other.data);
         sizeInBytes += other.sizeInBytes;

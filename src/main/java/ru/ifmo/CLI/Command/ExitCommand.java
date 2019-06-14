@@ -1,6 +1,6 @@
 package ru.ifmo.CLI.Command;
 
-import ru.ifmo.CLI.IOData;
+import ru.ifmo.CLI.Utils.IOData;
 import ru.ifmo.CLI.InterpreterEnvironment;
 
 

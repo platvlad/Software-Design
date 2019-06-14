@@ -1,6 +1,6 @@
 package ru.ifmo.CLI.Command;
 
-import ru.ifmo.CLI.IOData;
+import ru.ifmo.CLI.Utils.IOData;
 import ru.ifmo.CLI.InterpreterEnvironment;
 
 import java.util.List;
@@ -9,14 +9,6 @@ import java.util.List;
 public class AssignCommand extends Command {
     public AssignCommand() {
         super();
-    }
-
-    public AssignCommand(List<String> arguments) {
-        super(arguments);
-    }
-
-    public AssignCommand(IOData data) {
-        super(data);
     }
 
     public IOData execute() {

@@ -1,6 +1,8 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Command;
 
 import org.junit.Test;
+import ru.ifmo.CLI.InterpreterEnvironment;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -11,7 +13,8 @@ public class AssignCommandTest {
     public void testVariableAssigned() {
         List<String> arguments = new ArrayList<>();
         arguments.add("a=10");
-        Command command = new AssignCommand(arguments);
+        Command command = new AssignCommand();
+        command.addArguments(arguments);
         command.execute();
         String aValue = InterpreterEnvironment.getValue("a");
         assertEquals(String.valueOf(10), aValue);
@@ -21,7 +24,8 @@ public class AssignCommandTest {
     public void testVariableNotAssigned() {
         List<String> arguments = new ArrayList<>();
         arguments.add("a=10");
-        Command command = new AssignCommand(arguments);
+        Command command = new AssignCommand();
+        command.addArguments(arguments);
         command.execute();
         String bValue = InterpreterEnvironment.getValue("b");
         assertEquals("", bValue);
@@ -31,12 +35,14 @@ public class AssignCommandTest {
     public void testVariableAssignedAgain() {
         List<String> arguments10 = new ArrayList<>();
         arguments10.add("a=10");
-        Command command = new AssignCommand(arguments10);
+        Command command = new AssignCommand();
+        command.addArguments(arguments10);
         command.execute();
 
         List<String> arguments20 = new ArrayList<>();
         arguments20.add("a=20");
-        command = new AssignCommand(arguments20);
+        command = new AssignCommand();
+        command.addArguments(arguments20);
         command.execute();
         String aValue = InterpreterEnvironment.getValue("a");
         assertEquals(String.valueOf(20), aValue);
@@ -52,11 +58,14 @@ public class AssignCommandTest {
         argumentsD.add("d=2");
         argumentsE.add("e=3");
 
-        Command command = new AssignCommand(argumentsC);
+        Command command = new AssignCommand();
+        command.addArguments(argumentsC);
         command.execute();
-        command = new AssignCommand(argumentsD);
+        command = new AssignCommand();
+        command.addArguments(argumentsD);
         command.execute();
-        command = new AssignCommand(argumentsE);
+        command = new AssignCommand();
+        command.addArguments(argumentsE);
         command.execute();
 
         String cValue = InterpreterEnvironment.getValue("c");
@@ -66,5 +75,16 @@ public class AssignCommandTest {
         assertEquals(String.valueOf(1), cValue);
         assertEquals(String.valueOf(2), dValue);
         assertEquals(String.valueOf(3), eValue);
+    }
+
+    @Test
+    public void testAssignString() {
+        List<String> arguments = new ArrayList<>();
+        arguments.add("a=cat 1.txt");
+        Command command = new AssignCommand();
+        command.addArguments(arguments);
+        command.execute();
+        String aValue = InterpreterEnvironment.getValue("a");
+        assertEquals("cat 1.txt", aValue);
     }
 }
