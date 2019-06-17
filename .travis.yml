@@ -1,4 +1,4 @@
 install: gradle wrapper --gradle-version 4.10.3
 
 language: java
-jdk: oraclejdk10
+jdk: openjdk10
