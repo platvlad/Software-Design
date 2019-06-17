@@ -1,6 +1,6 @@
 package ru.ifmo.CLI.Parser;
 
-import ru.ifmo.CLI.Command.Command;
+import ru.ifmo.CLI.Commands.Command;
 import ru.ifmo.CLI.Utils.CommandMaker;
 import ru.ifmo.CLI.Utils.IOData;
 

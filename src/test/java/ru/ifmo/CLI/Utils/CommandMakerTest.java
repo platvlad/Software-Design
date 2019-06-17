@@ -1,10 +1,10 @@
 package ru.ifmo.CLI.Utils;
 
 import org.junit.Test;
-import ru.ifmo.CLI.Command.CatCommand;
-import ru.ifmo.CLI.Command.Command;
-import ru.ifmo.CLI.Command.ExternalCommand;
-import ru.ifmo.CLI.Command.WcCommand;
+import ru.ifmo.CLI.Commands.CatCommand;
+import ru.ifmo.CLI.Commands.Command;
+import ru.ifmo.CLI.Commands.ExternalCommand;
+import ru.ifmo.CLI.Commands.WcCommand;
 
 import java.util.ArrayList;
 import java.util.List;

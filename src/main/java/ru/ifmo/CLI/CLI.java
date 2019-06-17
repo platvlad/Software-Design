@@ -4,7 +4,7 @@ import ru.ifmo.CLI.Parser.LineParser;
 
 import java.util.Scanner;
 
-//Command line interpreter.
+//Commands line interpreter.
 //Commands implemented: cat, echo, wc, pwd, exit
 public class CLI {
     //read lines while exit signal was not sent

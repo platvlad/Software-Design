@@ -1,4 +1,4 @@
-package ru.ifmo.CLI.Command;
+package ru.ifmo.CLI.Commands;
 
 import org.apache.commons.cli.*;
 import ru.ifmo.CLI.Utils.IOData;

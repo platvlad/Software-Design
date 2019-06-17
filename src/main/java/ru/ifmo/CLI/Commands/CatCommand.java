@@ -1,4 +1,4 @@
-package ru.ifmo.CLI.Command;
+package ru.ifmo.CLI.Commands;
 
 import ru.ifmo.CLI.Utils.IOData;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//implementing cat Command (cat 1.txt)
+//implementing cat Commands (cat 1.txt)
 //Write files into output
 public class CatCommand extends Command {
     public CatCommand() {

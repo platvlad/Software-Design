@@ -1,10 +1,12 @@
-package ru.ifmo.CLI.Command;
+package ru.ifmo.CLI.Commands;
 
 import org.junit.Test;
 import ru.ifmo.CLI.Utils.IOData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,10 +14,8 @@ public class ExternalCommandTest {
 
     @Test
     public void testCallExternalWithArguments() {
-        List<String> arguments = new ArrayList<>();
-        arguments.add("src\\test\\resources\\Summator\\Debug\\Summator");
-        arguments.add(String.valueOf(5));
-        arguments.add(String.valueOf(7));
+        List<String> arguments = Stream.of("src\\test\\resources\\Summator\\Debug\\Summator",
+                String.valueOf(5), String.valueOf(7)).collect(Collectors.toList());
         Command command = new ExternalCommand();
         command.addArguments(arguments);
         IOData output = command.execute();

@@ -1,9 +1,7 @@
-package ru.ifmo.CLI.Command;
+package ru.ifmo.CLI.Commands;
 
 import ru.ifmo.CLI.Utils.IOData;
 import ru.ifmo.CLI.InterpreterEnvironment;
-
-import java.util.List;
 
 //class implementing Assign command (a=$b)
 public class AssignCommand extends Command {

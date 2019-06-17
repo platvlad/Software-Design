@@ -1,10 +1,10 @@
-package ru.ifmo.CLI.Command;
+package ru.ifmo.CLI.Commands;
 
 import java.util.ArrayList;
 import java.util.List;
 import ru.ifmo.CLI.Utils.IOData;
 
-//class for Command abstraction
+//class for Commands abstraction
 //Each command shall inherit this class
 public abstract class Command {
 

@@ -1,4 +1,4 @@
-package ru.ifmo.CLI.Command;
+package ru.ifmo.CLI.Commands;
 
 import org.junit.Test;
 
@@ -8,6 +8,8 @@ import ru.ifmo.CLI.Utils.IOData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CatCommandTest {
 
@@ -29,20 +31,17 @@ public class CatCommandTest {
     @Test
     public void testCatFileWithStrings() {
         List<String> result = catFile("some strings.txt");
-        assertEquals(3, result.size());
-        assertEquals("Some strings", result.get(0));
-        assertEquals("here", result.get(1));
-        assertEquals("!", result.get(2));
+        List<String> expected = Stream.of("Some strings", "here", "!").collect(Collectors.toList());
+        assertEquals(expected, result);
     }
 
     @Test
     public void testCatFileWithEmptyStrings() {
         List<String> result = catFile("with empty strings.txt");
+        List<String> expected = Stream.of("Some text", "Empty string:", "",
+                "Some other empty strings:", "", "", "        ", "  ").collect(Collectors.toList());
+        assertEquals(expected, result);
         assertEquals(8, result.size());
-        assertEquals("Some text", result.get(0));
-        assertEquals("Empty string:", result.get(1));
-        assertEquals("Some other empty strings:", result.get(3));
-        assertEquals("        ", result.get(6));
     }
 
     @Test
@@ -56,7 +55,6 @@ public class CatCommandTest {
         catCommand.setIOData(fromEcho);
         IOData outputData = catCommand.execute();
         List<String> result = outputData.getData();
-        assertEquals(1, result.size());
-        assertEquals("Hello, world!", result.get(0));
+        assertEquals(arguments, result);
     }
 }

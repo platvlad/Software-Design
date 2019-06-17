@@ -1,11 +1,11 @@
 package ru.ifmo.CLI.Utils;
 
-import ru.ifmo.CLI.Command.*;
+import ru.ifmo.CLI.Commands.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//class for creating Command objects by names and arguments
+//class for creating Commands objects by names and arguments
 public class CommandMaker {
 
     private static Command makeEmptyCommand(String name) {
@@ -37,14 +37,14 @@ public class CommandMaker {
         }
     }
 
-    //create Command by its name and arguments
+    //create Commands by its name and arguments
     public static Command makeCommand(String name, List<String> arguments) {
         Command command = makeEmptyCommand(name);
         command.addArguments(arguments);
         return command;
     }
 
-    //create Command by name and previous command output
+    //create Commands by name and previous command output
     public static Command makeCommand(String name, IOData data) {
         Command command = makeEmptyCommand(name);
         if (command.hasArguments()) {
