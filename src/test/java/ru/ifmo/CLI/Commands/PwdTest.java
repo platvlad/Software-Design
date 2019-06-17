@@ -1,23 +1,28 @@
 package ru.ifmo.CLI.Commands;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import ru.ifmo.CLI.InterpreterEnvironment;
 import ru.ifmo.CLI.Utils.IOData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PwdTest {
+
     @Test
     public void testPwd() {
-        List<String> arguments = new ArrayList<>();
-        Command command = new PwdCommand();
-        command.addArguments(arguments);
-        IOData result = command.execute();
+        Command cdCommand = new CdCommand();
+        List<String> cdCommandArguments = new ArrayList<>();
+        cdCommandArguments.add("src");
+        cdCommand.addArguments(cdCommandArguments);
+        cdCommand.execute();
+        Command pwdCommand = new PwdCommand();
+        IOData result = pwdCommand.execute();
         List<String> resultData = result.getData();
         String currentDirectory = resultData.get(0);
         String[] pathParts = currentDirectory.split("\\\\");
-        assertEquals("Software-Design", pathParts[pathParts.length - 1]);
+        assertEquals("src", pathParts[pathParts.length - 1]);
     }
 }

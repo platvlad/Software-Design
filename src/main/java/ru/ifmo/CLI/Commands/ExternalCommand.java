@@ -9,24 +9,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//class implementing external command calls
+/**
+ * Class implementing external command calls
+ */
 public class ExternalCommand extends Command {
     public ExternalCommand() {
         super();
     }
 
+    /**
+     * Executes command
+     * @return Output of external command if successful. Error message otherwise
+     */
     public IOData execute() {
         List<String> processArguments = arguments;
         if (fromPipe()) {
             processArguments.addAll(data.getData());
         }
-        ProcessBuilder processBuilder = new ProcessBuilder(processArguments);
+        var processBuilder = new ProcessBuilder(processArguments);
         processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();
             InputStream inputStream = process.getInputStream();
-            InputStreamReader streamReader = new InputStreamReader(inputStream);
-            BufferedReader buffReader = new BufferedReader(streamReader);
+            var streamReader = new InputStreamReader(inputStream);
+            var buffReader = new BufferedReader(streamReader);
             String line = buffReader.readLine();
             List<String> input = new ArrayList<String>();
             while (line != null) {
@@ -36,7 +42,7 @@ public class ExternalCommand extends Command {
             return new IOData(input);
         } catch (IOException ex) {
             String message = arguments.get(0) + " failed";
-            return stringToIOData(message);
+            return stringToIOData(message, true);
         }
     }
 }

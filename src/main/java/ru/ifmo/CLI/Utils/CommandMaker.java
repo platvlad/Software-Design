@@ -5,7 +5,9 @@ import ru.ifmo.CLI.Commands.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//class for creating Commands objects by names and arguments
+/**
+ * Class for creating Commands objects by names and arguments
+ */
 public class CommandMaker {
 
     private static Command makeEmptyCommand(String name) {
@@ -22,6 +24,8 @@ public class CommandMaker {
                 return new ExitCommand();
             case "grep":
                 return new GrepCommand();
+            case "cd":
+                return new CdCommand();
             default:
                 ArrayList<String> nameArgument = new ArrayList<>();
                 nameArgument.add(name);
@@ -37,14 +41,24 @@ public class CommandMaker {
         }
     }
 
-    //create Commands by its name and arguments
+    /**
+     * Create Commands by its name and arguments
+     * @param name Command name
+     * @param arguments Arguments for the command
+     * @return Command object with provided arguments
+     */
     public static Command makeCommand(String name, List<String> arguments) {
         Command command = makeEmptyCommand(name);
         command.addArguments(arguments);
         return command;
     }
 
-    //create Commands by name and previous command output
+    /**
+     * Create Commands by name and previous command output
+     * @param name Command name
+     * @param data Pipe input from previous command
+     * @return Command object
+     */
     public static Command makeCommand(String name, IOData data) {
         Command command = makeEmptyCommand(name);
         if (command.hasArguments()) {

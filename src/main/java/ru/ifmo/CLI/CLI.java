@@ -4,18 +4,22 @@ import ru.ifmo.CLI.Parser.LineParser;
 
 import java.util.Scanner;
 
-//Commands line interpreter.
-//Commands implemented: cat, echo, wc, pwd, exit
+/**
+ * Commands line interpreter.
+ * Commands implemented: cat, echo, wc, pwd, exit, grep
+ */
 public class CLI {
-    //read lines while exit signal was not sent
-    //Process lines subsequently
-    //create LineParser object for each line
+    /**
+     * Read lines while exit signal was not sent
+     * Process lines subsequently
+     * Create LineParser object for each line
+     */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        var scanner = new Scanner(System.in);
         while (!InterpreterEnvironment.exit) {
             if (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                LineParser parser = new LineParser();
+                var parser = new LineParser();
                 parser.parse(line);
             }
         }

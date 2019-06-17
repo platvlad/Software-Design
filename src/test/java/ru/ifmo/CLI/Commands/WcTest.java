@@ -1,12 +1,12 @@
 package ru.ifmo.CLI.Commands;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.Utils.IOData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WcTest {
 

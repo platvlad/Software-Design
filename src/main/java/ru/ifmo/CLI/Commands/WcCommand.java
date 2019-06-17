@@ -9,7 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-//implement wc (count number of strings, words and bytes in file)
+/**
+ * Class implementing wc (count number of strings, words and bytes in file)
+ */
 public class WcCommand extends Command {
 
     public WcCommand() {
@@ -27,6 +29,10 @@ public class WcCommand extends Command {
         return wordsNumber;
     }
 
+    /**
+     * Executes command
+     * @return IOData with number of strings, words and bytes in file. Error message if an error occurred.
+     */
     public IOData execute() {
         if (fromPipe()) {
             List<String> lines = data.getData();
@@ -34,10 +40,10 @@ public class WcCommand extends Command {
             int stringsNumber = lines.size();
             int wordsNumber = countWords(lines);
             String answer = stringsNumber + " " + wordsNumber + " " + size;
-            return stringToIOData(answer);
+            return stringToIOData(answer, false);
         } else {
             if (arguments.isEmpty()) {
-                return stringToIOData("No file provided to wc command");
+                return stringToIOData("No file provided to wc command", true);
             }
             String fileName = arguments.get(0);
             try {
@@ -47,13 +53,13 @@ public class WcCommand extends Command {
                 int stringsNumber = fileStrings.size();
                 int wordsNumber = countWords(fileStrings);
                 String answer = stringsNumber + " " + wordsNumber + " " + fileSize;
-                return stringToIOData(answer);
+                return stringToIOData(answer, false);
             } catch (FileNotFoundException ex) {
                 String message = "File " + fileName + " not found";
-                return stringToIOData(message);
+                return stringToIOData(message, true);
             } catch (IOException ex) {
                 String message = "Failed to read file " + fileName;
-                return stringToIOData(message);
+                return stringToIOData(message, true);
             }
         }
 

@@ -5,7 +5,9 @@ import ru.ifmo.CLI.InterpreterEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
-//getting arrays of words from line as parts of pipe
+/**
+ * Class for getting arrays of words from line as parts of pipe
+ */
 class CommandParser {
 
     private String line;
@@ -15,18 +17,27 @@ class CommandParser {
     private StringBuilder currentWord = new StringBuilder();
     private StringBuilder currentVariable = new StringBuilder();
 
+    /**
+     * Initialize parser with string
+     * @param line String to parse
+     */
     CommandParser(String line) {
         this.line = line;
     }
 
-    //get next symbol from line
+    /**
+     * Get next symbol from line
+     * @return Next symbol from line
+     */
     private char getSymbol() {
         char symbol = line.charAt(currentPosition);
         currentPosition++;
         return symbol;
     }
 
-    // parse part of the line inside weak quotes
+    /**
+     * Parse part of the line inside weak quotes
+     */
     private void parseWeakQuoting() {
         while (currentPosition < line.length()) {
             char symbol = getSymbol();
@@ -41,14 +52,17 @@ class CommandParser {
         }
     }
 
-    //parse variable name and substitute its value
+    /**
+     * Parse variable name and substitute its value
+     * @param ignorePipe True if we are inside variable value handling and shall ignore '|' symbol
+     * @return True if '|' handled and command ended
+     */
     private boolean handleVariable(boolean ignorePipe) {
         while (currentPosition < line.length()) {
             char symbol = getSymbol();
-            //if (symbol == '\'' || symbol == '\"' || symbol == ' ' || symbol == '$' || symbol == '|') {
              if (!Character.isLetterOrDigit(symbol)) {
                 String variableValue = InterpreterEnvironment.getValue(currentVariable.toString());
-                CommandParser variableValueParser = new CommandParser(variableValue);
+                var variableValueParser = new CommandParser(variableValue);
                 List<String> variableValueWords = variableValueParser.getWords(true);
                 if (variableValueWords.size() > 0) {
                     currentWord.append(variableValueWords.get(0));
@@ -108,7 +122,11 @@ class CommandParser {
         return true;
     }
 
-    //parse part of the line inside full quotes
+    /**
+     * Parse part of the line inside full quotes
+     * @param ignorePipe True if we are inside of variable value handling and shall ignore '|' symbol
+     * @return True if '|' symbol handled and command ended
+     */
     private boolean parseFullQuoting(boolean ignorePipe) {
         while (currentPosition < line.length()) {
             char symbol = getSymbol();
@@ -132,12 +150,19 @@ class CommandParser {
         return true;
     }
 
-    //true if whole line is already parsed
+    /**
+     * True if whole line is already parsed
+     * @return True if whole line is already parsed
+     */
     boolean finishedLineHandling() {
         return (currentPosition >= line.length());
     }
 
-    //ignorePipe is true when parsing variable value
+    /**
+     * Get list of words representing one command with its arguments
+     * @param ignorePipe True when parsing variable value
+     * @return List of words representing the command
+     */
     private List<String> getWords(boolean ignorePipe) {
         words = new ArrayList<>();
         while (currentPosition < line.length()) {
@@ -183,8 +208,11 @@ class CommandParser {
         return words;
     }
 
-    //get array of words from string
-    // until getting pipe symbol (|)
+    /**
+     * Get list of words representing one command with its arguments
+     * until getting pipe symbol (|)
+     * @return List of words representing the command
+     */
     List<String> getWords() {
         return getWords(false);
     }
