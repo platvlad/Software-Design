@@ -45,7 +45,8 @@ class CommandParser {
     private boolean handleVariable(boolean ignorePipe) {
         while (currentPosition < line.length()) {
             char symbol = getSymbol();
-            if (symbol == '\'' || symbol == '\"' || symbol == ' ' || symbol == '$' || symbol == '|') {
+            //if (symbol == '\'' || symbol == '\"' || symbol == ' ' || symbol == '$' || symbol == '|') {
+             if (!Character.isLetterOrDigit(symbol)) {
                 String variableValue = InterpreterEnvironment.getValue(currentVariable.toString());
                 CommandParser variableValueParser = new CommandParser(variableValue);
                 List<String> variableValueWords = variableValueParser.getWords(true);
@@ -91,6 +92,10 @@ class CommandParser {
                     }
                     return true;
                 default:
+                    if (!Character.isLetterOrDigit(symbol)) {
+                        currentWord.append(symbol);
+                        return false;
+                    }
                     currentVariable.append(symbol);
                     break;
             }
