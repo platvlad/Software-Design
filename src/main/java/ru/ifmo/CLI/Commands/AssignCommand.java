@@ -1,21 +1,23 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Commands;
 
-import java.util.List;
+import ru.ifmo.CLI.Utils.IOData;
+import ru.ifmo.CLI.InterpreterEnvironment;
 
 //class implementing Assign command (a=$b)
 public class AssignCommand extends Command {
-    public AssignCommand(List<String> arguments) {
-        super.arguments = arguments;
-    }
-
-    public AssignCommand(IOData data) {
-        this.data = data;
+    public AssignCommand() {
+        super();
     }
 
     public IOData execute() {
-        int equalIndex = arguments.get(0).indexOf('=');
-        String varName = arguments.get(0).substring(0, equalIndex);
-        String varValue = arguments.get(0).substring(equalIndex + 1);
+        if (arguments.size() != 1) {
+            String message = "Failed to assign variable with " + arguments.size() + " values";
+            return stringToIOData(message);
+        }
+        String assignment = arguments.get(0);
+        int equalIndex = assignment.indexOf('=');
+        String varName = assignment.substring(0, equalIndex);
+        String varValue = assignment.substring(equalIndex + 1);
         InterpreterEnvironment.setValue(varName, varValue);
         return new IOData();
     }

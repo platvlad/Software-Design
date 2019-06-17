@@ -1,27 +1,25 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Commands;
 
+import ru.ifmo.CLI.Utils.IOData;
+
+import java.util.ArrayList;
 import java.util.List;
 
-//implementing echo Command (Output parameters)
+//implementing echo Commands (Output parameters)
 public class EchoCommand extends Command {
-
-    public EchoCommand(List<String> arguments) {
-        super.arguments = arguments;
+    public EchoCommand() {
+        super();
     }
 
-    public EchoCommand(IOData data) {
-        this.data = data;
+    private IOData joinedIOData(List<String> input) {
+        String joined = String.join(" ", input);
+        List<String> output = new ArrayList<>();
+        output.add(joined);
+        return new IOData(output);
     }
 
     public IOData execute() {
-        if (arguments != null)
-        {
-            return new IOData(arguments);
-        }
-        else
-        {
-            return data;
-        }
+        return joinedIOData(arguments);
     }
 
 }

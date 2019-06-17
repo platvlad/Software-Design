@@ -1,4 +1,6 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Commands;
+
+import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,27 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//implementing cat Command (cat 1.txt)
+//implementing cat Commands (cat 1.txt)
 //Write files into output
 public class CatCommand extends Command {
-
-    public CatCommand(List<String> words) {
-        this.arguments = words;
-    }
-
-    public CatCommand(IOData data) {
-        this.data = data;
+    public CatCommand() {
+        super();
     }
 
     public IOData execute() {
-        IOData result = new IOData();
-        if (arguments != null) {
-            for (String fileName : arguments) {
-                result.add(catFile(fileName));
-            }
-            return result;
+        if (fromPipe()) {
+            return data;
         }
-        return data;
+        IOData result = new IOData();
+        for (String fileName : arguments) {
+            result.add(catFile(fileName));
+        }
+        return result;
+
     }
 
     private IOData catFile(String fileName) {
@@ -40,9 +38,7 @@ public class CatCommand extends Command {
             return new IOData(lines, file.length());
         } catch (FileNotFoundException ex) {
             String message = "File " + fileName + " not found";
-            List<String> output = new ArrayList<>();
-            output.add(message);
-            return new IOData(output);
+            return stringToIOData(message);
         }
     }
 }

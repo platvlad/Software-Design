@@ -1,25 +1,26 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Commands;
+
+import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 //class implementing external command calls
 public class ExternalCommand extends Command {
-    public ExternalCommand(List<String> arguments) {
-        super.arguments = arguments;
-    }
-
-    public ExternalCommand(IOData data) {
-        this.data = data;
+    public ExternalCommand() {
+        super();
     }
 
     public IOData execute() {
-        ProcessBuilder processBuilder = new ProcessBuilder(arguments);
+        List<String> processArguments = arguments;
+        if (fromPipe()) {
+            processArguments.addAll(data.getData());
+        }
+        ProcessBuilder processBuilder = new ProcessBuilder(processArguments);
         processBuilder.redirectErrorStream(true);
         try {
             Process process = processBuilder.start();
@@ -35,9 +36,7 @@ public class ExternalCommand extends Command {
             return new IOData(input);
         } catch (IOException ex) {
             String message = arguments.get(0) + " failed";
-            List<String> result = new ArrayList<>();
-            result.add(message);
-            return new IOData(result);
+            return stringToIOData(message);
         }
     }
 }

@@ -1,6 +1,7 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Commands;
 
 import org.apache.commons.cli.*;
+import ru.ifmo.CLI.Utils.IOData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,9 +17,8 @@ public class GrepCommand extends Command {
     private boolean printStrings = false;
     private int numberOfStrings = 0;
 
-    public GrepCommand(List<String> arguments) {
-        super.arguments = arguments;
-
+    public GrepCommand() {
+        super();
     }
 
     public IOData execute() {

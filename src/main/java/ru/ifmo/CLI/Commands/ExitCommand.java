@@ -1,15 +1,15 @@
-package ru.ifmo.CLI;
+package ru.ifmo.CLI.Commands;
 
-import java.util.List;
+import ru.ifmo.CLI.Utils.IOData;
+import ru.ifmo.CLI.InterpreterEnvironment;
+
 
 //implement command for exiting interpreter
 public class ExitCommand extends Command {
-    public ExitCommand(List<String> arguments) {
-        super.arguments = arguments;
+    public ExitCommand() {
+        super();
     }
-    public ExitCommand(IOData data) {
-        this.data = data;
-    }
+
     public IOData execute() {
         InterpreterEnvironment.exit = true;
         return new IOData();
