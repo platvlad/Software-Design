@@ -34,12 +34,7 @@ public class LineParser {
             List<String> arguments = words.subList(1, words.size());
             Command command;
             //create command by its name and arguments
-            if (result.isEmpty()) {
-                command = CommandMaker.makeCommand(commandName, arguments);
-            }
-            else {
-                command = CommandMaker.makeCommand(commandName, result);
-            }
+             command = CommandMaker.makeCommand(commandName, arguments, result);
             result = command.execute();
             if (result.errorOccured()) {
                 break;

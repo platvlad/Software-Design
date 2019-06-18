@@ -6,6 +6,7 @@ import ru.ifmo.CLI.Commands.Command;
 import ru.ifmo.CLI.Commands.ExternalCommand;
 import ru.ifmo.CLI.Commands.WcCommand;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class CommandMakerTest {
         arguments.add("src/test/resources/some strings.txt");
         catCommand.addArguments(arguments);
         IOData result = catCommand.execute();
-        Command commandFromMaker = CommandMaker.makeCommand("wc", result);
+        Command commandFromMaker = CommandMaker.makeCommand("wc", new ArrayList<>(), result);
         var wcCommand = new WcCommand();
         wcCommand.addArguments(arguments);
         assertEquals(wcCommand.execute().getData(), commandFromMaker.execute().getData());
@@ -40,14 +41,20 @@ public class CommandMakerTest {
     @Test
     public  void testCommandWithNameAsArgument() {
         List<String> arguments = new ArrayList<>();
-        arguments.add("src\\test\\resources\\Summator\\Debug\\Summator");
+        String argument = "src" + File.separator +
+                "test" + File.separator +
+                "resources" + File.separator +
+                "Summator" + File.separator +
+                "Debug" + File.separator +
+                "Summator";
+        arguments.add(argument);
         arguments.add(String.valueOf(5));
         arguments.add(String.valueOf(7));
         Command command = new ExternalCommand();
         command.addArguments(arguments);
         List<String> commandMakerArguments =
                 Stream.of(String.valueOf(5), String.valueOf(7)).collect(Collectors.toList());
-        Command commandFromMaker = CommandMaker.makeCommand("src\\test\\resources\\Summator\\Debug\\Summator",
+        Command commandFromMaker = CommandMaker.makeCommand(argument,
                 commandMakerArguments);
         assertEquals(command.execute().getData(), commandFromMaker.execute().getData());
     }
