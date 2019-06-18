@@ -48,9 +48,7 @@ public class CommandMaker {
      * @return Command object with provided arguments
      */
     public static Command makeCommand(String name, List<String> arguments) {
-        Command command = makeEmptyCommand(name);
-        command.addArguments(arguments);
-        return command;
+        return makeCommand(name, arguments, new IOData());
     }
 
     /**
@@ -59,13 +57,12 @@ public class CommandMaker {
      * @param data Pipe input from previous command
      * @return Command object
      */
-    public static Command makeCommand(String name, IOData data) {
+    public static Command makeCommand(String name, List<String> arguments, IOData data) {
         Command command = makeEmptyCommand(name);
-        if (command.hasArguments()) {
-            command.addArguments(data.getData());
-            return command;
+        command.addArguments(arguments);
+        if (!data.isEmpty()) {
+            command.setIOData(data);
         }
-        command.setIOData(data);
         return command;
     }
 }
