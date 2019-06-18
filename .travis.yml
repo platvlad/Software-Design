@@ -3,5 +3,4 @@ jdk: oraclejdk11
 before_script:
   - cd Summator/Summator
   - make
-script:
-  - ./gradlew build --scan -s
+  - cd ../../
