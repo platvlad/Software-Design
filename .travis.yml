@@ -1,4 +1,3 @@
-install: gcc
 before_script:
   - cd Summator/Summator
   - make
