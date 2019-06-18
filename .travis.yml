@@ -1,5 +1,6 @@
+language: java
+jdk: oraclejdk11
 before_script:
   - cd Summator/Summator
   - make
-language: java
-jdk: oraclejdk11
+
