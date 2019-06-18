@@ -4,6 +4,3 @@ before_script:
   - cd Summator/Summator
   - make
   - cd ../../
-  - cd src/test/resources/Summator/Debug
-  - ls
-  - cd ../../../../../
