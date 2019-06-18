@@ -1,6 +1,6 @@
 package ru.ifmo.CLI.Utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.Commands.CatCommand;
 import ru.ifmo.CLI.Commands.Command;
 import ru.ifmo.CLI.Commands.ExternalCommand;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CommandMakerTest {
 
@@ -19,20 +19,20 @@ public class CommandMakerTest {
     public void testCommandWithArguments() {
         List<String> arguments = Stream.of("1.txt", "2.txt").collect(Collectors.toList());
         Command commandFromMaker =  CommandMaker.makeCommand("cat", arguments);
-        CatCommand catCommand = new CatCommand();
+        var catCommand = new CatCommand();
         catCommand.addArguments(arguments);
         assertEquals(catCommand.execute().getData(), commandFromMaker.execute().getData());
     }
 
     @Test
     public void testCommandFromPipe() {
-        CatCommand catCommand = new CatCommand();
+        var catCommand = new CatCommand();
         List<String> arguments = new ArrayList<>();
         arguments.add("src/test/resources/some strings.txt");
         catCommand.addArguments(arguments);
         IOData result = catCommand.execute();
         Command commandFromMaker = CommandMaker.makeCommand("wc", result);
-        WcCommand wcCommand = new WcCommand();
+        var wcCommand = new WcCommand();
         wcCommand.addArguments(arguments);
         assertEquals(wcCommand.execute().getData(), commandFromMaker.execute().getData());
     }

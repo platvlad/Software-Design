@@ -8,13 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//implementing cat Commands (cat 1.txt)
-//Write files into output
+/**
+ * Class implements cat Commands (cat 1.txt)
+ * Write files into output
+ */
 public class CatCommand extends Command {
     public CatCommand() {
         super();
     }
 
+    /**
+     * Execute command
+     * @return IOData with file content if file is red successfully. IOData with error message otherwise
+     */
     public IOData execute() {
         if (fromPipe()) {
             return data;
@@ -30,7 +36,7 @@ public class CatCommand extends Command {
     private IOData catFile(String fileName) {
         try {
             File file = new File(fileName);
-            Scanner scanner = new Scanner(file);
+            var scanner = new Scanner(file);
             List<String> lines = new ArrayList<String>();
             while (scanner.hasNextLine()) {
                 lines.add(scanner.nextLine());
@@ -38,7 +44,7 @@ public class CatCommand extends Command {
             return new IOData(lines, file.length());
         } catch (FileNotFoundException ex) {
             String message = "File " + fileName + " not found";
-            return stringToIOData(message);
+            return stringToIOData(message, true);
         }
     }
 }

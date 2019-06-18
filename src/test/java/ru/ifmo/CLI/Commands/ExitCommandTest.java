@@ -1,9 +1,9 @@
 package ru.ifmo.CLI.Commands;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.InterpreterEnvironment;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExitCommandTest {
     @Test

@@ -1,18 +1,40 @@
 package ru.ifmo.CLI.Commands;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.Utils.IOData;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WcTest {
 
+    private String getPath(String fileName) {
+        return "src" + File.separator + "test" + File.separator + "resources" + File.separator + fileName;
+    }
+
+    private long getFileSize(String fileName) {
+        fileName = getPath(fileName);
+        Path filePath = Paths.get(fileName);
+        long fileSize = 0;
+        try {
+            fileSize = Files.size(filePath);
+        } catch (IOException ex) {
+            fail();
+        }
+        return fileSize;
+    }
+
     private String wcFile(String fileName, boolean catBefore) {
         List<String> arguments = new ArrayList<>();
-        arguments.add("src\\test\\resources\\" + fileName);
+        String path = getPath(fileName);
+        arguments.add(path);
         Command wcCommand = new WcCommand();
         if (catBefore) {
             Command catCommand = new CatCommand();
@@ -36,13 +58,15 @@ public class WcTest {
     @Test
     public void testFileWithSomeStrings() {
         String wcResult = wcFile("some strings.txt", false);
-        assertEquals("3 4 21", wcResult);
+        long fileSize = getFileSize("some strings.txt");
+        assertEquals("3 4 " + fileSize, wcResult);
     }
 
     @Test
     public void testWithEmptyStrings() {
         String wcResult = wcFile("with empty strings.txt", false);
-        assertEquals("8 8 71", wcResult);
+        long fileSize = getFileSize("with empty strings.txt");
+        assertEquals("8 8 " + fileSize, wcResult);
     }
 
     @Test
@@ -54,13 +78,15 @@ public class WcTest {
     @Test
     public void testWcSummatorInputFromPipe() {
         String wcResult = wcFile("summator input.txt", true);
-        assertEquals("2 2 4", wcResult);
+        long fileSize = getFileSize("summator input.txt");
+        assertEquals("2 2 " + fileSize, wcResult);
     }
 
     @Test
     public void testWcFileWithEmptyStringsFromPipe() {
         String wcResult = wcFile("with empty strings.txt", true);
-        assertEquals("8 8 71", wcResult);
+        long fileSize = getFileSize("with empty strings.txt");
+        assertEquals("8 8 " + fileSize, wcResult);
     }
 
     @Test
