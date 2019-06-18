@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.InterpreterEnvironment;
 import ru.ifmo.CLI.Utils.IOData;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class CdCommandTest {
         Command command = makeCdCommand("src");
         command.execute();
         String currentDirectory = InterpreterEnvironment.currentDirectoryName;
-        String[] pathParts = currentDirectory.split("\\\\");
+        String regex = "\\" + File.separator;
+        String[] pathParts = currentDirectory.split(regex);
         assertEquals("src", pathParts[pathParts.length - 1]);
     }
 
@@ -36,7 +38,8 @@ public class CdCommandTest {
         Command secondCd = makeCdCommand("main");
         secondCd.execute();
         String currentDirectory = InterpreterEnvironment.currentDirectoryName;
-        String[] pathParts = currentDirectory.split("\\\\");
+        String regex = "\\" + File.separator;
+        String[] pathParts = currentDirectory.split(regex);
         assertEquals("main", pathParts[pathParts.length - 1]);
         assertEquals("src", pathParts[pathParts.length - 2]);
     }
@@ -56,11 +59,12 @@ public class CdCommandTest {
         Command secondCd = makeCdCommand("main");
         secondCd.execute();
         String oldDirectory = InterpreterEnvironment.currentDirectoryName;
-        String[] oldPathParts = oldDirectory.split("\\\\");
+        String regex = "\\" + File.separator;
+        String[] oldPathParts = oldDirectory.split(regex);
         Command backCd = makeCdCommand("../");
         backCd.execute();
         String newDirectory = InterpreterEnvironment.currentDirectoryName;
-        String[] newPathParts = newDirectory.split("\\\\");
+        String[] newPathParts = newDirectory.split(regex);
         assertEquals(oldPathParts[oldPathParts.length - 2], newPathParts[newPathParts.length - 1]);
     }
 

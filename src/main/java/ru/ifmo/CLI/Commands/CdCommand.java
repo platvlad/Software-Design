@@ -31,17 +31,19 @@ public class CdCommand extends Command {
             return stringToIOData("Too many arguments provided to cd", true);
         }
         String directoryName = folderNames.get(0);
-        if (directoryName.equals("./")) {
+        String sameDirectory = "." + File.separator;
+        if (directoryName.equals(sameDirectory) || directoryName.equals("./")) {
             return new IOData();
         }
-        if (directoryName.equals("../")) {
+        String parentDirectory = ".." + File.separator;
+        if (directoryName.equals(parentDirectory) || directoryName.equals("../")) {
             File directory = new File(InterpreterEnvironment.currentDirectoryName);
             InterpreterEnvironment.currentDirectoryName = directory.getParentFile().getAbsolutePath();
             return new IOData();
         }
         File directory = new File(directoryName);
         if (!directory.isAbsolute()) {
-            directoryName = InterpreterEnvironment.currentDirectoryName + "\\" + directoryName;
+            directoryName = InterpreterEnvironment.currentDirectoryName + File.separator + directoryName;
             directory = new File(directoryName);
         }
 

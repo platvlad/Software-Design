@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.InterpreterEnvironment;
 import ru.ifmo.CLI.Utils.IOData;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class PwdTest {
         IOData result = pwdCommand.execute();
         List<String> resultData = result.getData();
         String currentDirectory = resultData.get(0);
-        String[] pathParts = currentDirectory.split("\\\\");
+        String regex = "\\" + File.separator;
+        String[] pathParts = currentDirectory.split(regex);
         assertEquals("src", pathParts[pathParts.length - 1]);
     }
 }

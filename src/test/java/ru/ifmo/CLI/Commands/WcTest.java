@@ -3,6 +3,7 @@ package ru.ifmo.CLI.Commands;
 import org.junit.jupiter.api.Test;
 import ru.ifmo.CLI.Utils.IOData;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class WcTest {
 
     private String wcFile(String fileName, boolean catBefore) {
         List<String> arguments = new ArrayList<>();
-        arguments.add("src\\test\\resources\\" + fileName);
+        String path = "src" + File.separator + "test" + File.separator + "resources" + File.separator + fileName;
+        arguments.add(path);
         Command wcCommand = new WcCommand();
         if (catBefore) {
             Command catCommand = new CatCommand();
