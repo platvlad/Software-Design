@@ -19,6 +19,7 @@
 Summator, который можно собрать с помощью CMake командой 
 
 ```cmake ../../../Summator/Summator -DCMAKE_BUILD_TYPE=Debug -DTARGET_CPU=x86```
+
 вызванной из src/test/resources или с помощью Makefile.
 
 ## Архитектура интерпретатора
