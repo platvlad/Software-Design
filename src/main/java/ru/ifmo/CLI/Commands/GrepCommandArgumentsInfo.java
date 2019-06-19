@@ -6,7 +6,10 @@ import ru.ifmo.CLI.Utils.IOData;
 import java.util.Collections;
 import java.util.List;
 
-class GrepCommandArgumentsInfo {
+/**
+ * Class parsing and representing data about grep command arguments
+ */
+class GrepArgumentsInfo {
     private String[] arguments;
     private boolean caseSensitivity = true;
     private boolean wholeWord = false;
@@ -19,6 +22,7 @@ class GrepCommandArgumentsInfo {
     private static final CommandLineParser parser = new DefaultParser();
     private static final HelpFormatter helpFormatter = new HelpFormatter();
 
+    // Initialize Options
     static {
         options = new Options();
         Option caseOption = new Option("i", false, "case insensitivity");
@@ -34,10 +38,19 @@ class GrepCommandArgumentsInfo {
         options.addOption(printOption);
     }
 
-    GrepCommandArgumentsInfo(String[] arguments) {
+    /**
+     * Initialize object with arguments
+     * @param arguments Command arguments
+     */
+    GrepArgumentsInfo(String[] arguments) {
         this.arguments = arguments;
     }
 
+    /**
+     * Check if str can represent number of strings to print
+     * @param str Input string
+     * @return True if string represents non-negative int
+     */
     private boolean isCorrectNumber(String str) {
         if (str == null) {
             return false;
@@ -53,6 +66,10 @@ class GrepCommandArgumentsInfo {
         return true;
     }
 
+    /**
+     * Parse command arguments
+     * @return Error message in case of errors. Empty IOData otherwise
+     */
     IOData parseArguments() {
         CommandLine cmd;
         String answer;

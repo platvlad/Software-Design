@@ -12,22 +12,31 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class implementing grep command (find regular expression in a file)
+ * Options:
+ * -i: case insensitivity
+ * -w: find only whole words
+ * -A n: print n strings after matching
+ */
 public class GrepCommand extends Command {
 
     public GrepCommand() {
         super();
     }
 
+    /**
+     * Find pattern in list of strings
+     * @param fileContent List of strings where to find pattern
+     * @param patternString Pattern string
+     * @param argInfo Arguments for this command
+     * @return List of strings to print
+     */
     private List<String> findPatternInFileContent(List<String> fileContent,
-                                                  String patternString,
-                                                  GrepCommandArgumentsInfo argInfo) {
+                                                  Pattern pattern,
+                                                  GrepArgumentsInfo argInfo) {
         List<String> output = new ArrayList<>();
-        Pattern pattern;
-        if (argInfo.isCaseSensitivity()) {
-            pattern = Pattern.compile(patternString);
-        } else {
-            pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-        }
+
         int remainingStrings = 0;
         for (String line : fileContent) {
             boolean foundPattern = false;
@@ -58,9 +67,13 @@ public class GrepCommand extends Command {
         return output;
     }
 
+    /**
+     * Execute grep command
+     * @return IOData with strings that should be printed
+     */
     public IOData execute() {
         String[] argumentsArray = arguments.toArray(new String[0]);
-        var argInfo = new GrepCommandArgumentsInfo(argumentsArray);
+        var argInfo = new GrepArgumentsInfo(argumentsArray);
         IOData parseArgumentMessage = argInfo.parseArguments();
         if (!parseArgumentMessage.isEmpty()) {
             return parseArgumentMessage;
@@ -69,6 +82,13 @@ public class GrepCommand extends Command {
         List<String> output = new ArrayList<>();
         List<String> files = argInfo.getFileNames();
         String patternString = argInfo.getPatternString();
+        Pattern pattern;
+        if (argInfo.isCaseSensitivity()) {
+            pattern = Pattern.compile(patternString);
+        } else {
+            pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+        }
+
         for (String fileName : files) {
             Path filePath = Paths.get(fileName);
             List<String> fileStrings;
@@ -82,10 +102,10 @@ public class GrepCommand extends Command {
                 output.add("Failed to read file " + fileName);
                 continue;
             }
-            output.addAll(findPatternInFileContent(fileStrings, patternString, argInfo));
+            output.addAll(findPatternInFileContent(fileStrings, pattern, argInfo));
         }
         if (fromPipe()) {
-            output.addAll(findPatternInFileContent(data.getData(), patternString, argInfo));
+            output.addAll(findPatternInFileContent(data.getData(), pattern, argInfo));
         }
 
         return new IOData(output);
