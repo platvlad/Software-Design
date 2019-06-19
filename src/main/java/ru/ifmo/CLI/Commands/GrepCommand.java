@@ -28,7 +28,7 @@ public class GrepCommand extends Command {
     /**
      * Find pattern in list of strings
      * @param fileContent List of strings where to find pattern
-     * @param patternString Pattern string
+     * @param pattern Pattern o find
      * @param argInfo Arguments for this command
      * @return List of strings to print
      */
