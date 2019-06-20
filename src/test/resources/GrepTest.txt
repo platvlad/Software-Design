@@ -1,0 +1,8 @@
+This is the first string
+This is a string with word test
+Nothing
+Something
+Here is something about contest
+TeSt! TesT TEsT!!
+.....
+This is the last string.
