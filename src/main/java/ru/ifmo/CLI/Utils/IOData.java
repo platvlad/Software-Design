@@ -42,11 +42,20 @@ public class IOData {
     /**
      * IOData object representing an error can be created through this constructor
      * @param inputData Pipe content
-     * @param isErrorMessage Flag if inputData represents an error message
+     * @param isErrorMessage True if inputData represents an error message
      */
     public IOData(List<String> inputData, boolean isErrorMessage) {
         this(inputData);
         this.isErrorMessage = isErrorMessage;
+    }
+
+    /**
+     * Create IOData object by single string and error flag
+     * @param line Pipe content
+     * @param isError True if inputData represents an error message
+     */
+    public IOData(String line, boolean isError) {
+        this(List.of(line), isError);
     }
 
     /**
@@ -80,7 +89,6 @@ public class IOData {
      */
     public void add(IOData other) {
         empty = false;
-        List<String> concatenation = new ArrayList<String>(data.size() + other.data.size());
         data.addAll(other.data);
         sizeInBytes += other.sizeInBytes;
     }

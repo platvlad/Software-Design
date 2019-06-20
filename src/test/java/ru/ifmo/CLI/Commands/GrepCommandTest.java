@@ -40,7 +40,7 @@ public class GrepCommandTest {
     public void testFindWordFromPipe() {
         IOData pipe =  executeCat();
         Command grep = new GrepCommand();
-        List<String> grepArguments = Collections.singletonList("This");
+        List<String> grepArguments = List.of("This");
         grep.addArguments(grepArguments);
         grep.setIOData(pipe);
         List<String> expected = Stream.of("This is the first string",
@@ -55,7 +55,7 @@ public class GrepCommandTest {
         Command grep = new GrepCommand();
         List<String> arguments = Stream.of("test", fileName, "-w").collect(Collectors.toList());
         grep.addArguments(arguments);
-        List<String> expected = Collections.singletonList("This is a string with word test");
+        List<String> expected = List.of("This is a string with word test");
         List<String> result = grep.execute().getData();
         assertEquals(expected, result);
     }

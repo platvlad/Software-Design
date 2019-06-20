@@ -47,26 +47,6 @@ class GrepArgumentsInfo {
     }
 
     /**
-     * Check if str can represent number of strings to print
-     * @param str Input string
-     * @return True if string represents non-negative int
-     */
-    private boolean isCorrectNumber(String str) {
-        if (str == null) {
-            return false;
-        }
-        if (str.length() == 0) {
-            return false;
-        }
-        for (int i = 0; i < str.length(); i++) {
-            if (!Character.isDigit(str.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Parse command arguments
      * @return Error message in case of errors. Empty IOData otherwise
      */
@@ -78,19 +58,17 @@ class GrepArgumentsInfo {
         } catch (ParseException ex) {
             helpFormatter.printHelp("grep", options);
             answer = "Unable to parse grep arguments";
-            List<String> output = Collections.singletonList(answer);
-            return new IOData(output);
+            return new IOData(answer, true);
         }
         caseSensitivity = !(cmd.hasOption("i"));
         wholeWord = cmd.hasOption("w");
         if (cmd.hasOption("A")) {
             String aOption = cmd.getOptionValue("A");
-            if (isCorrectNumber(aOption)) {
-                numberOfStrings = Integer.parseInt(cmd.getOptionValue("A"));
-            } else {
-                answer = numberOfStrings + " is not a number";
-                List<String> output = Collections.singletonList(answer);
-                return new IOData(output);
+            try {
+                numberOfStrings = Integer.parseInt(aOption);
+            } catch (NumberFormatException ex) {
+                answer = aOption + " is not a number";
+                return new IOData(answer, true);
             }
         }
         List<String> remainingArguments = cmd.getArgList();

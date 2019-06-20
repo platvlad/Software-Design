@@ -8,8 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -32,7 +32,7 @@ public class GrepCommand extends Command {
      * @param argInfo Arguments for this command
      * @return List of strings to print
      */
-    private List<String> findPatternInFileContent(List<String> fileContent,
+    private List<String> findPatternInLines(List<String> fileContent,
                                                   Pattern pattern,
                                                   GrepArgumentsInfo argInfo) {
         List<String> output = new ArrayList<>();
@@ -40,29 +40,51 @@ public class GrepCommand extends Command {
         int remainingStrings = 0;
         for (String line : fileContent) {
             boolean foundPattern = false;
+            List<String> forMatching = List.of(line);
             if (argInfo.isWholeWord()) {
                 String[] words = line.split(" ");
-                for (String word : words) {
-                    Matcher matcher = pattern.matcher(word);
-                    if (matcher.matches()) {
-                        output.add(line);
-                        remainingStrings = argInfo.getNumberOfStrings();
-                        foundPattern = true;
-                        break;
-                    }
-                }
-            } else {
-                Matcher matcher = pattern.matcher(line);
-                if (matcher.find()) {
+                forMatching = Arrays.asList(words);
+            }
+            for (String word : forMatching) {
+                var matcher = pattern.matcher(word);
+                if (!argInfo.isWholeWord() && matcher.find() || argInfo.isWholeWord() && matcher.matches()) {
                     output.add(line);
                     remainingStrings = argInfo.getNumberOfStrings();
                     foundPattern = true;
+                    break;
                 }
             }
             if (!foundPattern && remainingStrings > 0) {
                 output.add(line);
                 remainingStrings--;
             }
+        }
+        return output;
+    }
+
+    /**
+     * Find pattern in provided files
+     * @param fileNames File names
+     * @param pattern Pattern to search
+     * @param argInfo Grep command arguments
+     * @return List of strings to print
+     */
+    private List<String> findPatternInFiles(List<String> fileNames, Pattern pattern, GrepArgumentsInfo argInfo) {
+        List<String> output = new ArrayList<>();
+        for (var fileName : fileNames) {
+            Path filePath = Paths.get(fileName);
+            List<String> fileStrings;
+
+            try {
+                fileStrings = Files.readAllLines(filePath);
+            } catch (FileNotFoundException ex) {
+                output.add("File " + fileName + " not found");
+                continue;
+            } catch (IOException ex) {
+                output.add("Failed to read file " + fileName);
+                continue;
+            }
+            output.addAll(findPatternInLines(fileStrings, pattern, argInfo));
         }
         return output;
     }
@@ -79,7 +101,6 @@ public class GrepCommand extends Command {
             return parseArgumentMessage;
         }
 
-        List<String> output = new ArrayList<>();
         List<String> files = argInfo.getFileNames();
         String patternString = argInfo.getPatternString();
         Pattern pattern;
@@ -89,23 +110,9 @@ public class GrepCommand extends Command {
             pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         }
 
-        for (String fileName : files) {
-            Path filePath = Paths.get(fileName);
-            List<String> fileStrings;
-
-            try {
-                fileStrings = Files.readAllLines(filePath);
-            } catch (FileNotFoundException ex) {
-                output.add("File " + fileName + " not found");
-                continue;
-            } catch (IOException ex) {
-                output.add("Failed to read file " + fileName);
-                continue;
-            }
-            output.addAll(findPatternInFileContent(fileStrings, pattern, argInfo));
-        }
+        List<String> output = findPatternInFiles(files, pattern, argInfo);
         if (fromPipe()) {
-            output.addAll(findPatternInFileContent(data.getData(), pattern, argInfo));
+            output.addAll(findPatternInLines(data.getData(), pattern, argInfo));
         }
 
         return new IOData(output);
