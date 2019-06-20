@@ -26,6 +26,8 @@ public class CommandMaker {
                 return new GrepCommand();
             case "cd":
                 return new CdCommand();
+            case "ls":
+                return new LsCommand();
             default:
                 ArrayList<String> nameArgument = new ArrayList<>();
                 nameArgument.add(name);
